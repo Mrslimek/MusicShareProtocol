@@ -1,0 +1,75 @@
+# Swift Package Manager
+.build/
+.buildSystem_*
+CACHEDIR.TAG
+Package.resolved
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+DerivedData/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Android/Gradle
+.gradle/
+build/
+local.properties
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.jar
+*.aar
+*.so
+*.o
+*.obj
+*.log
+*.iml
+*.ipr
+*.iws
+.idea/
+.kotlin/
+*.gradle.kts
+*.gradle.kts.d
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build outputs
+*.build/
+build/
+dist/
+out/
+target/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+*.test
+*.spec
+coverage/
+.nyc_output/
+
+# Misc
+*.bak
+*.tmp
+*.temp
+Thumbs.db

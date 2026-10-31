@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/localInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:typeface="monospace"
+        android:textSize="12sp"
+        android:text="starting…" />
+
+    <TextView
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8B0000"
+        android:textColor="#FFFFFF"
+        android:padding="6dp"
+        android:visibility="gone"
+        android:text="Discovery unavailable; manual connect still works" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/nameField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="device name"
+            android:inputType="text"
+            android:maxLength="63" />
+
+        <Button android:id="@+id/btnSetName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="set name" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sectionPeers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Peers"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/peers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:textSize="12sp"
+            android:text="(none)" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/sectionState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simulated playback state"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/track"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="track"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/position"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:hint="pos s"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/btnPlaying" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="play" />
+        <Button android:id="@+id/btnPaused" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="pause" />
+        <Button android:id="@+id/btnStopped" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="stop" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/autoBroadcast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="auto broadcast" />
+
+        <Button
+            android:id="@+id/btnBroadcast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="broadcast state" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sectionTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test message / Manual connect"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/testMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="test text"
+            android:inputType="text" />
+
+        <Button android:id="@+id/btnTest" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="send" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/manualHost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="host:port"
+            android:inputType="text" />
+
+        <Button android:id="@+id/btnConnect" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="connect" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Log"
+            android:textStyle="bold" />
+
+        <Button android:id="@+id/btnCopy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="copy" />
+        <Button android:id="@+id/btnShare" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="share" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/logScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+
+        <TextView
+            android:id="@+id/logView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:textSize="11sp"
+            android:textIsSelectable="true" />
+    </ScrollView>
+
+</LinearLayout>

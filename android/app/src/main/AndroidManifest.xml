@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <!-- Runtime permission requested on API >= 33 before NSD starts. -->
+    <uses-permission
+        android:name="android.permission.NEARBY_WIFI_DEVICES"
+        android:usesPermissionFlags="neverForLocation" />
+    <!-- Forward-compat for Android 16 (API 36+) local-network opt-in. With
+         targetSdk 35 the app stays exempt, so this is declarative only. -->
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+
+    <application
+        android:allowBackup="false"
+        android:label="Music Share"
+        android:theme="@android:style/Theme.DeviceDefault.Light">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="Music Share">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
