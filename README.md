@@ -96,3 +96,11 @@ permission denial, defect-fix re-verification), all on one host with the emulato
 bridged (environment-specific). No physical two-device Wi-Fi test has been run yet; every
 physical-device result in `docs/REPORT.md` is marked as such. All measured numbers there
 are labeled single-machine.
+
+## Landing page
+
+Curious what this project is aiming for? Check out the **vibe-coded landing page** — a visual introduction to the idea, the intended user experience, and the protocol architecture:
+
+**[MusicShareProtocol — What if your music could follow you?](https://mrslimek.github.io/MusicShareProtocol/)**
+
+It's an early visual concept, not a demo of working music handoff. The actual implementation status and test results are documented above.
