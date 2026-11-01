@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b12">
+<meta name="description" content="MusicShareProtocol — an open protocol for sharing playback sessions between independent music players on a local network.">
+<title>MusicShareProtocol — Your music, across your devices</title>
+<style>
+:root{--bg:#080b12;--panel:#0d1320;--panel2:#101a2b;--line:#1c2a40;--text:#edf3ff;--muted:#91a0b8;--blue:#71b7ff;--cyan:#70e1df;--violet:#a78bfa;--green:#8ce6bd;--max:1160px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:radial-gradient(ellipse at 50% -15%,#14213a 0,transparent 43%),var(--bg);color:var(--text);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.012em}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.wrap{width:min(var(--max),calc(100% - 44px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:#080b12d9;backdrop-filter:blur(18px);border-bottom:1px solid #ffffff0d}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.04em}
+.brandmark{width:28px;height:28px;border:1px solid #4c8acb;border-radius:9px;display:grid;place-items:center;color:var(--blue);box-shadow:0 0 22px #4b9bff25}
+.brandmark svg{width:17px}
+.navlinks{display:flex;align-items:center;gap:28px;color:var(--muted);font-size:13px}
+.navlinks a:hover,.navlinks a.active{color:var(--text)}
+.navlinks .github{color:#dceaff;border:1px solid #31425d;border-radius:9px;padding:8px 13px}
+.hero{padding:94px 0 80px;overflow:hidden}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:#a9c9f3;text-transform:uppercase;letter-spacing:.15em;font-size:10px;font-weight:700}
+.pulse{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
+h1{font-size:clamp(48px,7.2vw,88px);line-height:.99;letter-spacing:-.075em;max-width:900px;margin:22px 0 22px;font-weight:650}
+.grad{background:linear-gradient(100deg,#f1f6ff 12%,#8fcaff 52%,#a99aff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:660px;color:#aab8cd;font-size:clamp(17px,2vw,20px);line-height:1.65;margin:0}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{padding:11px 16px;border-radius:10px;border:1px solid #344966;background:#111d2e;color:#eaf4ff;font-size:13px;font-weight:650;display:inline-flex;align-items:center;gap:9px;transition:.2s}
+.btn.primary{background:#dceeff;color:#08111e;border-color:#dceeff}
+.btn:hover{transform:translateY(-2px);border-color:var(--blue)}
+.visual{margin:68px auto 0;position:relative;border:1px solid #20324a;border-radius:22px;background:linear-gradient(145deg,#0d1625ed,#090e18f5);padding:22px;box-shadow:0 30px 100px #0008,inset 0 1px #ffffff0a}
+.visual-top{display:flex;justify-content:space-between;align-items:center;color:#8495ad;font:10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
+.live{color:#8ce6bd;display:flex;align-items:center;gap:7px}
+.diagram{width:100%;height:auto;display:block;min-height:260px}
+.node{fill:#101d30;stroke:#355273;stroke-width:1.4}
+.node-accent{fill:#13263d;stroke:#5596d2;stroke-width:1.5}
+.node-title{fill:#edf4ff;font:600 15px ui-sans-serif,system-ui}
+.node-sub{fill:#8fa3bd;font:11px ui-sans-serif,system-ui}
+.node-icon{fill:none;stroke:#91caff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.edge{fill:none;stroke:#315b83;stroke-width:1.5;stroke-dasharray:5 7;opacity:.8}
+.edge-bright{fill:none;stroke:url(#edgeGradient);stroke-width:2.2;stroke-linecap:round;filter:url(#glow)}
+.signal{fill:#9de7ff;filter:url(#glow);animation:travel 4s linear infinite}
+.signal.s2{animation-delay:-1.5s}
+@keyframes travel{from{offset-distance:0%}to{offset-distance:100%}}
+.signal{offset-rotate:0deg}
+.session{fill:#0c1a2b;stroke:#294968;stroke-width:1}
+.session-title{fill:#cde7ff;font:600 11px ui-monospace,monospace;letter-spacing:.08em}
+.session-sub{fill:#829bb8;font:10px ui-sans-serif,system-ui}
+.visual-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #ffffff0c;padding-top:15px;color:#7f91aa;font:10px ui-monospace,monospace}
+.section{padding:90px 0;border-top:1px solid #ffffff0c}
+.section-kicker{color:#78b9f4;font:11px ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase}
+h2{font-size:clamp(34px,5vw,54px);line-height:1.08;letter-spacing:-.06em;margin:14px 0 18px;font-weight:620}
+.section-intro{color:var(--muted);max-width:680px;font-size:17px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:42px}
+.card{border:1px solid #1d2b40;background:linear-gradient(145deg,#101827,#0b111c);border-radius:15px;padding:23px;min-height:190px}
+.card-icon{width:35px;height:35px;border:1px solid #314d6b;border-radius:10px;display:grid;place-items:center;color:#8fcaff;margin-bottom:20px}
+.card h3{font-size:16px;margin:0 0 8px;letter-spacing:-.03em}
+.card p{font-size:13px;color:var(--muted);margin:0;line-height:1.65}
+.callout{margin-top:22px;padding:20px 22px;border:1px solid #273951;border-radius:13px;background:#0c1421;color:#aabbd0;font-size:14px}
+.callout strong{color:#eaf3ff}
+.protocol-visual{margin-top:40px;padding:28px;border:1px solid #1d2b40;border-radius:18px;background:#0b111c}
+.layer{display:flex;align-items:center;gap:18px;border:1px solid #25364e;border-radius:12px;background:#101a29;padding:17px 20px}
+.layer.main{border-color:#477db1;background:linear-gradient(100deg,#102039,#11182b);box-shadow:0 0 35px #4a91d51a}
+.layer-num{color:#6faee8;font:11px ui-monospace,monospace;width:26px}
+.layer-copy{flex:1}
+.layer-title{font-weight:650;font-size:14px}
+.layer-desc{color:#8fa1b9;font-size:12px;margin-top:2px}
+.layer-tags{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.tag{border:1px solid #2a405b;color:#9eb4d0;border-radius:6px;padding:4px 7px;font:10px ui-monospace,monospace}
+.connector{height:24px;width:1px;background:linear-gradient(#477db1,#25364e);margin-left:42px;position:relative}
+.connector:after{content:"";position:absolute;bottom:0;left:-3px;width:6px;height:6px;border-right:1px solid #6faee8;border-bottom:1px solid #6faee8;transform:rotate(45deg)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+.steps{display:grid;gap:0;margin-top:28px}
+.step{display:grid;grid-template-columns:40px 1fr;gap:14px;padding:17px 0;border-top:1px solid #ffffff12}
+.step-no{color:#6daee8;font:12px ui-monospace,monospace;padding-top:3px}
+.step h3{font-size:15px;margin:0 0 5px}
+.step p{color:var(--muted);font-size:13px;margin:0}
+.note{font-size:12px;color:#8394aa;border-left:2px solid #477db1;padding-left:13px;margin-top:25px}
+.cta{border:1px solid #2b4260;border-radius:18px;padding:35px;background:radial-gradient(ellipse at 90% 0%,#1b3150 0,transparent 55%),#0d1522;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.cta p{color:var(--muted);margin:8px 0 0;font-size:14px}
+footer{padding:28px 0 40px;color:#71829a;font-size:11px}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid #ffffff10;padding-top:22px}
+.mobile-menu{display:none}
+@media(max-width:760px){
+ .wrap{width:min(100% - 32px,var(--max))}.nav{height:64px}.navlinks{gap:14px;font-size:12px}.navlinks a:nth-child(2){display:none}
+ .hero{padding:70px 0 60px}.visual{margin-top:45px;padding:13px;border-radius:15px}.diagram{min-height:190px}
+ .three{grid-template-columns:1fr}.card{min-height:0}.section{padding:68px 0}.two-col{grid-template-columns:1fr;gap:20px}
+ .layer{padding:14px 12px;gap:10px}.layer-tags{display:none}.layer-num{width:20px}.protocol-visual{padding:14px}
+ .cta{align-items:flex-start;flex-direction:column;padding:25px}
+}
+@media(max-width:430px){.navlinks{gap:10px}.navlinks .github{padding:7px 9px}.brand{font-size:13px}.visual-top{font-size:8px}.visual-foot{font-size:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="#vision" aria-label="MusicShareProtocol home">
+   <span class="brandmark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.5h5.5M13.5 7.5H19M7.5 5v5M16.5 5v5M7.5 14h9M7.5 14v5M16.5 14v5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="5" cy="7.5" r="2" fill="currentColor"/><circle cx="19" cy="7.5" r="2" fill="currentColor"/><circle cx="7.5" cy="14" r="2" fill="currentColor"/><circle cx="16.5" cy="14" r="2" fill="currentColor"/></svg></span>
+   MusicShareProtocol
+  </a>
+  <nav class="navlinks" aria-label="Main navigation">
+   <a href="#vision" class="active">Vision</a><a href="#protocol">Protocol</a>
+   <a class="github" href="https://github.com/Mrslimek/MusicShareProtocol" target="_blank" rel="noreferrer">GitHub ↗</a>
+  </nav>
+ </div>
+</header>
+
+<main>
+<section class="hero" id="vision">
+ <div class="wrap">
+  <div class="eyebrow"><span class="pulse"></span> An open protocol for local music experiences</div>
+  <h1>What if your music<br><span class="grad">could follow you?</span></h1>
+  <p class="lead">Your music library. Your devices. One shared listening experience — without being tied to a streaming platform or a single player.</p>
+  <div class="actions">
+   <a class="btn primary" href="#protocol">Explore the protocol <span>↓</span></a>
+   <a class="btn" href="https://github.com/Mrslimek/MusicShareProtocol" target="_blank" rel="noreferrer">View on GitHub <span>↗</span></a>
+  </div>
+
+  <div class="visual" aria-label="Conceptual diagram of independent music players connected in a peer-to-peer network">
+   <div class="visual-top"><span>Shared listening session / Local network</span><span class="live"><span class="pulse"></span> Peer-to-peer concept</span></div>
+   <svg class="diagram" viewBox="0 0 1000 420" role="img" aria-labelledby="diagramTitle diagramDesc">
+    <title id="diagramTitle">Independent devices connected by MusicShareProtocol</title>
+    <desc id="diagramDesc">A Mac, Android phone and another player exchange playback session state over direct local network connections. Audio files remain on each device.</desc>
+    <defs>
+     <linearGradient id="edgeGradient" x1="0" x2="1"><stop stop-color="#6c9cff"/><stop offset=".55" stop-color="#69e0dc"/><stop offset="1" stop-color="#a58cff"/></linearGradient>
+     <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+     <path id="pathA" d="M290 150 C380 150 390 190 455 205"/>
+     <path id="pathB" d="M710 150 C620 150 610 190 545 205"/>
+     <path id="pathC" d="M500 280 C500 330 500 330 500 350"/>
+    </defs>
+    <path class="edge" d="M290 150 C380 150 390 190 455 205 M710 150 C620 150 610 190 545 205 M500 280 V350"/>
+    <path class="edge-bright" d="M290 150 C380 150 390 190 455 205 M710 150 C620 150 610 190 545 205"/>
+    <circle class="signal" r="4"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#pathA"/></animateMotion></circle>
+    <circle class="signal s2" r="4"><animateMotion dur="4.5s" repeatCount="indefinite"><mpath href="#pathB"/></animateMotion></circle>
+    <g transform="translate(110 75)">
+     <rect class="node" width="180" height="150" rx="15"/>
+     <rect x="18" y="18" width="34" height="34" rx="9" fill="#162c45" stroke="#426b91"/>
+     <rect class="node-icon" x="25" y="27" width="20" height="14" rx="2"/><path class="node-icon" d="M22 45h26"/>
+     <text class="node-title" x="18" y="82">MacBook</text><text class="node-sub" x="18" y="101">Bòcan Player</text>
+     <circle cx="23" cy="124" r="3" fill="#8ce6bd"/><text class="node-sub" x="34" y="128" fill="#8ce6bd">Playing locally</text>
+    </g>
+    <g transform="translate(710 75)">
+     <rect class="node" width="180" height="150" rx="15"/>
+     <rect x="18" y="18" width="34" height="34" rx="9" fill="#162c45" stroke="#426b91"/>
+     <rect class="node-icon" x="28" y="23" width="14" height="24" rx="3"/><path class="node-icon" d="M33 43h4"/>
+     <text class="node-title" x="18" y="82">Android</text><text class="node-sub" x="18" y="101">PixelPlayer</text>
+     <circle cx="23" cy="124" r="3" fill="#71b7ff"/><text class="node-sub" x="34" y="128">Ready to take over</text>
+    </g>
+    <g transform="translate(390 175)">
+     <rect class="session" width="220" height="105" rx="14"/>
+     <text class="session-title" x="110" y="30" text-anchor="middle">MUSICSHAREPROTOCOL</text>
+     <path d="M25 45h170" stroke="#263c56"/>
+     <circle cx="32" cy="68" r="3" fill="#70e1df"/><text class="session-sub" x="43" y="72">Playback state</text>
+     <circle cx="125" cy="68" r="3" fill="#a78bfa"/><text class="session-sub" x="136" y="72">Handoff</text>
+     <text class="session-sub" x="110" y="91" text-anchor="middle">Direct peer connections</text>
+    </g>
+    <g transform="translate(365 350)">
+     <rect x="0" y="0" width="270" height="45" rx="9" fill="#0d1725" stroke="#263a53"/>
+     <path d="M18 15h12v15H18zM21 12h6M21 33h6" stroke="#7699bc" fill="none" stroke-width="1.4"/>
+     <text class="node-sub" x="43" y="19">Independent local libraries</text>
+     <text class="node-sub" x="43" y="33" fill="#8ce6bd">Audio stays on each device</text>
+    </g>
+    <text x="500" y="318" fill="#7188a5" font-size="10" text-anchor="middle" font-family="ui-monospace,monospace">NO AUDIO STREAMING</text>
+   </svg>
+   <div class="visual-foot"><span>01 / Independent players</span><span>02 / Shared session state</span><span>03 / Local files stay local</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="section">
+ <div class="wrap">
+  <div class="section-kicker">The idea</div>
+  <h2>Your library shouldn't<br>lock you into one device.</h2>
+  <p class="section-intro">Streaming services make music incredibly convenient. But many listeners still build and maintain their own local music libraries — and want the freedom to use the players and devices they choose.</p>
+  <div class="three">
+   <article class="card"><div class="card-icon"><svg viewBox="0 0 24 24" width="19" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg></div><h3>Keep your music local</h3><p>Your audio files stay in your own libraries. MusicShareProtocol coordinates playback state, not audio delivery.</p></article>
+   <article class="card"><div class="card-icon"><svg viewBox="0 0 24 24" width="19" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 5h4M11 18.5h2"/></svg></div><h3>Move between devices</h3><p>Start listening on one device and continue on another player using its own local copy of the track.</p></article>
+   <article class="card"><div class="card-icon"><svg viewBox="0 0 24 24" width="19" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="m7.3 10.8 9.4-4.6M7.3 13.2l9.4 4.6"/></svg></div><h3>Keep players independent</h3><p>No replacement player or mandatory ecosystem. The goal is interoperability between applications that already exist.</p></article>
+  </div>
+  <div class="callout"><strong>The idea in one sentence:</strong> independent music players, sharing one listening session over your local network.</div>
+ </div>
+</section>
+
+<section class="section" id="protocol">
+ <div class="wrap">
+  <div class="section-kicker">Under the hood / 02</div>
+  <h2>A small protocol.<br><span class="grad">A connected experience.</span></h2>
+  <p class="section-intro">MusicShareProtocol is designed as an integration layer between music players. Each application remains responsible for its own library and playback engine.</p>
+  <div class="protocol-visual" role="img" aria-label="Conceptual architecture layers of MusicShareProtocol">
+   <div class="layer"><span class="layer-num">01</span><div class="layer-copy"><div class="layer-title">Independent music players</div><div class="layer-desc">Existing applications and their native playback engines</div></div><div class="layer-tags"><span class="tag">Bòcan</span><span class="tag">PixelPlayer</span><span class="tag">More players</span></div></div>
+   <div class="connector"></div>
+   <div class="layer main"><span class="layer-num">02</span><div class="layer-copy"><div class="layer-title">MusicShareProtocol</div><div class="layer-desc">Peer discovery · Session state · Playback handoff · Conflict awareness</div></div><div class="layer-tags"><span class="tag">Open protocol</span></div></div>
+   <div class="connector"></div>
+   <div class="layer"><span class="layer-num">03</span><div class="layer-copy"><div class="layer-title">Local network</div><div class="layer-desc">Device discovery and direct peer-to-peer communication</div></div><div class="layer-tags"><span class="tag">LAN</span><span class="tag">Direct connections</span></div></div>
+   <div class="connector"></div>
+   <div class="layer"><span class="layer-num">04</span><div class="layer-copy"><div class="layer-title">Local music libraries</div><div class="layer-desc">Each device resolves and plays its own local copy of a track</div></div><div class="layer-tags"><span class="tag">No audio transfer</span></div></div>
+  </div>
+
+  <div class="two-col" style="margin-top:65px">
+   <div>
+    <div class="section-kicker">How it works</div>
+    <h2 style="font-size:34px">From discovery<br>to handoff.</h2>
+    <p class="section-intro" style="font-size:14px">The intended experience is simple for listeners. Underneath, participating players coordinate a shared session.</p>
+   </div>
+   <div class="steps">
+    <div class="step"><span class="step-no">01</span><div><h3>Discover peers</h3><p>Players find other compatible devices on the local network.</p></div></div>
+    <div class="step"><span class="step-no">02</span><div><h3>Share session state</h3><p>Participants exchange the current track, playback status, position and active device.</p></div></div>
+    <div class="step"><span class="step-no">03</span><div><h3>Hand off playback</h3><p>The receiving player locates the matching local file and resumes from the shared position.</p></div></div>
+    <div class="step"><span class="step-no">04</span><div><h3>Surface conflicts</h3><p>If participants disagree about the session, the protocol makes that conflict visible instead of silently choosing a winner.</p></div></div>
+   </div>
+  </div>
+  <p class="note">The device diagram illustrates the intended experience, not a claim of universal device support. Compatibility depends on player integrations. The protocol and integrations are actively evolving.</p>
+  <div class="cta" style="margin-top:65px">
+   <div><div class="section-kicker">Open source / In development</div><h2 style="font-size:32px;margin:8px 0">Help connect the players.</h2><p>Explore the protocol, follow development, or build an integration for your music player.</p></div>
+   <a class="btn primary" href="https://github.com/Mrslimek/MusicShareProtocol" target="_blank" rel="noreferrer">Explore the repository ↗</a>
+  </div>
+ </div>
+</section>
+</main>
+<footer><div class="wrap footer-inner"><span>© <span id="year"></span> MusicShareProtocol · Open source project</span><span>Built for local music. Designed for independent players.</span></div></footer>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const links=[...document.querySelectorAll('.navlinks a[href^="#"]')];
+const sections=links.map(a=>document.querySelector(a.getAttribute('href')));
+if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));}}),{rootMargin:'-25% 0px -65% 0px'});sections.forEach(s=>s&&io.observe(s));}
+</script>
+</body>
+</html>
